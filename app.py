@@ -315,16 +315,21 @@ def export_docx(data, output_path):
 
 
 def find_thai_font():
+    """หาไฟล์ฟอนต์ไทยสำหรับสร้าง PDF ทั้งบนเครื่อง Windows และ Streamlit Cloud"""
     candidates = [
-        "C:/Windows/Fonts/THSarabunNew.ttf",
-        "C:/Windows/Fonts/THSarabun.ttf",
-        "C:/Windows/Fonts/tahoma.ttf",
-        "/usr/share/fonts/truetype/noto/NotoSansThai-Regular.ttf",
-        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        APP_DIR / "THSarabunNew.ttf",              # กรณีอัปโหลดไว้หน้าแรกของ GitHub repo
+        APP_DIR / "fonts" / "THSarabunNew.ttf",   # กรณีอัปโหลดไว้ในโฟลเดอร์ fonts
+        APP_DIR / "Sarabun-Regular.ttf",
+        APP_DIR / "fonts" / "Sarabun-Regular.ttf",
+        Path("C:/Windows/Fonts/THSarabunNew.ttf"),
+        Path("C:/Windows/Fonts/THSarabun.ttf"),
+        Path("C:/Windows/Fonts/tahoma.ttf"),
+        Path("/usr/share/fonts/truetype/noto/NotoSansThai-Regular.ttf"),
+        Path("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"),
     ]
     for path in candidates:
-        if os.path.exists(path):
-            return path
+        if path.exists():
+            return str(path)
     return None
 
 
